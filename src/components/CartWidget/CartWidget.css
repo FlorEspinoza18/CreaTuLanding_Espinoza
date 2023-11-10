@@ -1,0 +1,20 @@
+
+.cart-icon {
+    color: rgb(0, 0, 0);
+  }
+  
+  .cart-widget {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  input {
+    margin-left: 15px;
+    width: 30px;
+    padding: 3px;
+    text-align: center;
+  }
+  

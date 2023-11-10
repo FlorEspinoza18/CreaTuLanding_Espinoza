@@ -1,0 +1,53 @@
+
+.divNavBar {
+    position: relative;
+    text-align: center;
+    height: 120px;
+    padding: 0 20px;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; 
+  }
+  
+  li {
+    margin: 0 60px; 
+    color: #be327f;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  
+  li:hover {
+    color: #ff00d4;
+  }
+  
+  /* Estilos para el logo de carrito */
+  .CartWidget {
+    cursor: pointer;
+    color: #fff;
+  }
+  
+  .CartWidget:hover {
+    color: #adadad;
+  }
+  
+  .navbar {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(201, 26, 114, 0.767);
+    margin-top: 15px;
+  }
+  
+.logo {
+  width: 250px;
+  height: auto;
+  position: absolute;
+  top: -40px;
+  margin: 10px;
+}
