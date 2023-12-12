@@ -1,28 +1,27 @@
-
-import './App.css'
-import ItemListContainer from './components/ItemListContainer/ItemListContainer'
-import NavBar from './components/NavBar/NavBar'
 import './App.css';
+import { ChakraProvider } from '@chakra-ui/react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar/NavBar';
+import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import Contenedor from './components/Contenedor/Contenedor';
+import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
+import logo from './assets/GiftedJourneysLogo3.png';
 
 function App() {
-  
-  //array de elementos para pasar como props a navbar.
-  const menuItems = ['Servicios', 'Nosotros', 'Contacto'];
 
   return (
-    <div>
-        <NavBar menuItems={menuItems} />
-        <ItemListContainer title={"PRODUCTOS "}/>
-
-        <div className="contenedores">
-        <Contenedor />
-        <Contenedor />
-        <Contenedor />
-        <Contenedor />
-        </div>
-      </div>
-    
+    <ChakraProvider>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path='/' element={<ItemListContainer />} />
+          <Route path='/product/:itemId' element={<ItemDetailContainer />} />
+          <Route path='/category/:categoryId' element={<ItemListContainer />} />
+          <Route path='*' element={<h1>Error</h1>} />
+        </Routes>
+      </Router>
+    </ChakraProvider>
   );
 }
-export default App
+
+export default App;
