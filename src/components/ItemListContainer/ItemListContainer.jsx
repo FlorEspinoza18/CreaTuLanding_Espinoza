@@ -3,44 +3,55 @@ import { Box, Flex, Heading } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { getProducts, getProductsByCategory } from '../../data/asyncMock';
 import { RingLoader } from 'react-spinners';
-import { Spinner } from '@chakra-ui/react';
 import ItemList from '../ItemList/ItemList';
+import { collection, where, query, getDocs } from 'firebase/firestore';
+import { db } from '../../config/Firebase';
 
 const ItemListContainer = ({ title }) => {
   const [data, setData] = useState([]);
-  //const [isLoading, setIsLoading] = useState(true); // Añade estado para el indicador de carga
-  const [loading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { categoryId } = useParams();
 
   useEffect(() => {
-    setIsLoading(true); // Establece isLoading en true al inicio de la carga
+    setIsLoading(true);
+    const getData = async () => {
+      const queryRef = !categoryId ? collection(db, 'productos') :
+        query(collection(db, 'productos'), where('categoria', '==', categoryId));
 
-    if (categoryId) {
-      getProductsByCategory(categoryId)
-        .then((prod) => {
-          setData(prod);
-          setIsLoading(false); // Cambia isLoading a false cuando se completa la carga
-        })
-        .catch((err) => console.log(err));
-    } else {
-      getProducts()
-        .then((prod) => {
-          setData(prod);
-          setIsLoading(false); // Cambia isLoading a false cuando se completa la carga
-        })
-        .catch((err) => console.log(err));
-    }
+      const response = await getDocs(queryRef);
+
+      const products = response.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id
+      }));
+
+      setTimeout(() => {
+        setData(products);
+        setIsLoading(false);
+      }, 1000);
+    };
+
+    getData();
   }, [categoryId]);
 
   return (
-    <Flex direction={'column'} justify={'center'} align={'center'} color='violet'>
-      <Box>
-        <Heading>{title}</Heading>
-      </Box>
-      {loading ? ( 
-        <RingLoader color="#BF3CE9" loading={loading} size={150} />
+    <Flex direction={'column'} justify={'center'} align={'center'} m={4}>
+      {isLoading ? (
+        <RingLoader color="#BF3CE9" loading={isLoading} size={150} />
       ) : (
-        <ItemList data={data} />
+        <>
+            <Heading as="h1" fontSize="2xl" color="#6A0572" mb={4}>
+            {title}
+          </Heading>
+          {categoryId && (
+            <Heading as="h1" fontSize="lg" color="#6A0572">
+              Categoría: {categoryId}
+            </Heading>
+          )}
+          {/* <Heading>{title}</Heading>
+          {categoryId && <Heading>Categoría: {categoryId}</Heading>} */}
+          <ItemList data={data} />
+        </>
       )}
     </Flex>
   );

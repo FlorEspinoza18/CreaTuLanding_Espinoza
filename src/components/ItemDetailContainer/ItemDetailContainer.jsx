@@ -1,38 +1,45 @@
-import {Box, Flex, Heading} from '@chakra-ui/react'
-import { useEffect } from 'react'
-import {useState} from 'react'
-import {useParams} from 'react-router-dom'
-import { getProductById, getProducts, getProductsByCategory } from '../../data/asyncMock'
+import React, { useEffect, useState } from 'react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
 import { RingLoader } from 'react-spinners';
-import { Spinner } from '@chakra-ui/react'
-import ItemList from '../ItemList/ItemList'
-import ItemDetail from '../ItemDetail/ItemDetail'
+import ItemDetail from '../ItemDetail/ItemDetail';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../config/Firebase';
 
 const ItemDetailContainer = () => {
-  const [product, setProduct] = useState({})
-  const [loading, setLoading] = useState(true);
-  const { itemId } = useParams()
+  const [product, setProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const { itemId } = useParams();
 
   useEffect(() => {
-   getProductById(itemId)
-   .then((prod) => {
-    setProduct(prod);
-    setLoading(false);
-    console.log(prod); 
-   })
-  }, [itemId])
+    setIsLoading(true);
+    const getProduct = async () => {
+      const queryRef = doc(db, 'productos', itemId);
+      const response = await getDoc(queryRef);
 
-  return(
-    <div>
-      {loading ? (
-        <div className="spinner">
-          <RingLoader color="##BF3CE9" loading={loading} size={150} />
-        </div>
-      ) : (
-        <ItemDetail {...product} />
+      const newProduct = {
+        id: response.id,
+        ...response.data(),
+      };
+
+      setTimeout(() => {
+        setProduct(newProduct);
+        setIsLoading(false);
+      }, 500);
+    };
+    getProduct();
+  }, [itemId]);
+
+  return (
+    <Flex direction={'column'} justify={'center'} align={'center'} m={4}>
+      <RingLoader color="#BF3CE9" loading={isLoading} size={150} />
+      {!isLoading && (
+        <Flex justify={'center'} align={'center'}>
+          <ItemDetail {...product} />
+        </Flex>
       )}
-    </div>
-  )
-}
+    </Flex>
+  );
+};
 
-export default ItemDetailContainer
+export default ItemDetailContainer;

@@ -38,14 +38,24 @@
     color: #adadad;
   }
   
-  .navbar {
+  /* .navbar {
     background-color: white;
     box-shadow: 0 2px 4px rgba(201, 26, 114, 0.767);
     margin-top: 15px;
-  }
-  
+  } */
+  .navbar {
+    box-shadow: 0 2px 4px rgba(201, 26, 114, 0.767);
+
+    /* Ajustes adicionales si es necesario */
+    height: 80px; /* O un tamaño que prefieras */
+}
+  /* Ajustes para los elementos dentro del NavBar */
+li {
+  margin: 0 30px; /* Reducir el margen si es necesario */
+  font-size: 20px; /* Ajustar el tamaño del texto si es necesario */
+}
 .logo {
-  width: 250px;
+  width: 150px;
   height: auto;
   position: absolute;
   top: -40px;

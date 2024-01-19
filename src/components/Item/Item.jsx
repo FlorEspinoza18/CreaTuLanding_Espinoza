@@ -3,7 +3,7 @@ import { Card, Image, Stack, Heading, Text, Divider, ButtonGroup, Button, CardBo
 import ItemCount from '../ItemCount/ItemCount';
 import { Link } from 'react-router-dom';
 
-const Item = ({ id, nombre, imagen, precio, descripcion }) => {
+const Item = ({ id, nombre, imagen, precio,stock }) => {  
   return (
     <Card maxW='sm'>
       <CardBody>
@@ -25,7 +25,7 @@ const Item = ({ id, nombre, imagen, precio, descripcion }) => {
               </Link>
             </Button>
         </ButtonGroup>
-        <ItemCount initial={1} stock={5} />
+        {/* <ItemCount initial={1} stock={5} /> */}
       </CardFooter>
     </Card>
   );
