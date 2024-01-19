@@ -5,12 +5,12 @@ import productos from "../data/asyncMock";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyD9kr8BYWVm7VQ5cPk6XmBfKCSua7q-Ohc",
-    authDomain: "gifted-journeys.firebaseapp.com",
-    projectId: "gifted-journeys",
-    storageBucket: "gifted-journeys.appspot.com",
-    messagingSenderId: "474460963271",
-    appId: "1:474460963271:web:5be08b711198a017a599e2"
+    apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
+    authDomain:import.meta.env.VITE_FIREBASE_AUTHDOMAIN ,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGEBUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGINGSENDERID,
+    appId: import.meta.env.VITE_FIREBASE_APPID
   };
 
 // Initialize Firebase
